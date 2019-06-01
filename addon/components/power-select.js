@@ -570,6 +570,17 @@ export default Component.extend({
     }
     let options = toPlainArray(opts);
     let publicAPI;
+    let queryString = 'div[data-ebd-id="' + publicAPI.uniqueId + '-trigger"]';
+    //Add a data attribute to use for CSS selection for input UI
+    if (Array.isArray(changes.selected) && changes.selected.length > 0) {
+      $(queryString).parent().parent().attr('selected-item', 'true');
+    } else if (Array.isArray(changes.selected) && changes.selected.length === 0) {    
+      $(queryString).parent().parent().attr('selected-item', 'false');
+    } else if (changes.selected) {
+      $(queryString).attr('selected-item', 'true');
+    } else if (changes.selected === null) {     
+      $(queryString).attr('selected-item', 'false');
+    }
     if (this.get('search')) { // external search
       publicAPI = this.updateState({ options, results: options, resultsCount: countOptions(options), loading: false });
     } else { // filter
