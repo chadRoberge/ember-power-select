@@ -569,18 +569,7 @@ export default Component.extend({
       return;
     }
     let options = toPlainArray(opts);
-    let publicAPI;
-    let queryString = 'div[data-ebd-id="' + publicAPI.uniqueId + '-trigger"]';
-    //Add a data attribute to use for CSS selection for input UI
-    if (Array.isArray(changes.selected) && changes.selected.length > 0) {
-      $(queryString).parent().parent().attr('selected-item', 'true');
-    } else if (Array.isArray(changes.selected) && changes.selected.length === 0) {    
-      $(queryString).parent().parent().attr('selected-item', 'false');
-    } else if (changes.selected) {
-      $(queryString).attr('selected-item', 'true');
-    } else if (changes.selected === null) {     
-      $(queryString).attr('selected-item', 'false');
-    }
+    let publicAPI;    
     if (this.get('search')) { // external search
       publicAPI = this.updateState({ options, results: options, resultsCount: countOptions(options), loading: false });
     } else { // filter
@@ -710,12 +699,12 @@ export default Component.extend({
     let queryString = 'div[data-ebd-id="' + publicAPI.uniqueId + '-trigger"]';
     //Add a data attribute to use for CSS selection for input UI
     if (Array.isArray(changes.selected) && changes.selected.length > 0) {
-      $(queryString).parent().parent().attr('selected-item', 'true');
-    } else if (Array.isArray(changes.selected) && changes.selected.length === 0) {    
-      $(queryString).parent().parent().attr('selected-item', 'false');
+      $(queryString).attr('selected-item', 'true');
+    } else if (Array.isArray(changes.selected) && changes.selected.length === 0) {
+      $(queryString).attr('selected-item', 'false');
     } else if (changes.selected) {
       $(queryString).attr('selected-item', 'true');
-    } else if (changes.selected === null) {     
+    } else if (changes.selected === null) {
       $(queryString).attr('selected-item', 'false');
     }
     let newState = set(this, 'publicAPI', assign({}, this.get('publicAPI'), changes));
