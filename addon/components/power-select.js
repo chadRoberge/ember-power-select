@@ -695,6 +695,18 @@ export default Component.extend({
   },
 
   updateState(changes) {
+    let publicAPI = this.get('publicAPI');
+    let queryString = 'div[data-ebd-id="' + publicAPI.uniqueId + '-trigger"]';
+    //Add a data attribute to use for CSS selection for input UI
+    if (Array.isArray(changes.selected) && changes.selected.length > 0) {
+      $(queryString).parent().parent().attr('selected-item', 'true');
+    } else if (Array.isArray(changes.selected) && changes.selected.length === 0) {    
+      $(queryString).parent().parent().attr('selected-item', 'false');
+    } else if (changes.selected) {
+      $(queryString).attr('selected-item', 'true');
+    } else if (changes.selected === null) {     
+      $(queryString).attr('selected-item', 'false');
+    }
     let newState = set(this, 'publicAPI', assign({}, this.get('publicAPI'), changes));
     let registerAPI = this.get('registerAPI');
     if (registerAPI) {
